@@ -1,7 +1,3 @@
-Here is a professional, **Portfolio-Grade README** based on the full context of your project. It highlights the business value, the "Two-Brain" architecture, and the technical implementation details found in your notebooks.
-
----
-
 # 🏦 Adaptive Loan Pricing Engine ("Project Dynamic")
 
 ### *A Dual-Model AI System for Real-Time Interest Rate Optimization*
