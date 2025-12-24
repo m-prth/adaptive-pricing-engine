@@ -45,6 +45,7 @@ Predicts `P(Accept | Rate)`.
 
 ### 3. The Optimization Engine
 Predicts if a loan will be accepted at the offered Rate.
+
 *Subject to:*
 * Max Rate <= 36% (Regulatory)
 * Max Rate <= 18% (For Prime Segment Strategy)
