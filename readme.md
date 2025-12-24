@@ -45,7 +45,7 @@ Predicts `P(Accept | Rate)`.
 
 ### 3. The Optimization Engine
 $$
-\text{Maximize } E[\text{Profit}] = P(\text{Accept}) \times \bigg[ (1 - \text{PD}) \cdot \text{InterestIncome} - (\text{PD} \cdot \text{LGD} \cdot \text{LoanAmt}) \bigg]
+\mathbb{E}[\text{Profit}_i(r)] = P(\text{Accept}_i(r)) \times \Big[ (1 - PD_i) \cdot \text{Income}(r) - PD_i \cdot \text{Loss} \Big]
 $$
 *Subject to:*
 * Max Rate <= 36% (Regulatory)
