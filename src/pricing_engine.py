@@ -13,7 +13,7 @@ class LoanPricingEngine:
         self.lgd = lgd
         
         # ---------------------------------------------------------
-        # Governance Policy Configuration 
+        # Governance Policy Config 
         # ---------------------------------------------------------
         self.policy_config = {
             'GLOBAL_MIN_RATE': 0.05,   # 5%
@@ -62,9 +62,9 @@ class LoanPricingEngine:
         """
         Finds the profit-maximizing interest rate for a single applicant.
         """
-        # -----------------------------------------------------------
+        
         # STEP 1: PREDICT RISK (PD) - Brain 1
-        # -----------------------------------------------------------
+        
         risk_cols = self.risk_model.get_booster().feature_names
         risk_input = pd.DataFrame([applicant_data])
         for col in risk_cols:
@@ -85,9 +85,12 @@ class LoanPricingEngine:
                 'policy_notes': ["Pre-optimization PD Check"]
             }
 
-        rate_grid = np.linspace(self.policy_config['GLOBAL_MIN_RATE'], self.policy_config['GLOBAL_MAX_RATE'], 61) # 0.5% steps
+        rate_grid = np.linspace(self.policy_config['GLOBAL_MIN_RATE'], self.policy_config['GLOBAL_MAX_RATE'], 61)
         loan_amt = applicant_data.get('LoanOriginalAmount', 15000)
         risk_score = applicant_data.get('risk_score_norm', 0.5)
+        
+
+        term_years = applicant_data.get('term_years', 3)
         segment = self._determine_segment(risk_score)
 
         elast_input = pd.DataFrame({
@@ -112,8 +115,8 @@ class LoanPricingEngine:
 
         # Profit Calculation
         # Profit = P(Accept) * [ (1-PD)*Income - PD*Loss ]
-        
-        profit_good = (rate_grid - self.cost_of_funds) * loan_amt
+        annual_profit = (rate_grid - self.cost_of_funds) * loan_amt
+        profit_good = annual_profit * term_years
         loss_bad = self.lgd * loan_amt
         expected_margin = ((1 - pd_prob) * profit_good) - (pd_prob * loss_bad)
         expected_profits = accept_probs * expected_margin

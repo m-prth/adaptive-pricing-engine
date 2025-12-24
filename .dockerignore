@@ -1,0 +1,23 @@
+# 1. EXCLUDE BIG DATA (Crucial)
+# We need the models, but NOT the CSVs used to train them.
+data/
+*.csv
+*.zip
+
+# 2. EXCLUDE RESEARCH LAB
+# The container runs the app, not the experiments.
+notebooks/
+docs/
+
+# 3. EXCLUDE GIT HISTORY
+.git/
+.gitignore
+
+# 4. EXCLUDE LOCAL PYTHON ENVIRONMENTS
+# The container builds its own clean environment.
+venv/
+env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
