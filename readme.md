@@ -44,9 +44,7 @@ Predicts `P(Accept | Rate)`.
 * **Insight:** Subprime borrowers are 3x more sensitive to rate hikes than Prime borrowers.
 
 ### 3. The Optimization Engine
-$$
-\mathbb{E}[\text{Profit}_i(r)] = P(\text{Accept}_i(r)) \times \Big[ (1 - PD_i) \cdot \text{Income}(r) - PD_i \cdot \text{Loss} \Big]
-$$
+Predicts if a loan will be accepted at the offered Rate.
 *Subject to:*
 * Max Rate <= 36% (Regulatory)
 * Max Rate <= 18% (For Prime Segment Strategy)
