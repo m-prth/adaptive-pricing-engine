@@ -5,9 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from pricing_engine import LoanPricingEngine
 
-# -----------------------------------------------------------
-# 1. APP CONFIG & STYLING
-# -----------------------------------------------------------
+
 st.set_page_config(page_title="Adaptive Pricing Engine", page_icon="🏦", layout="wide")
 
 st.markdown("""
@@ -19,12 +17,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------------------------------------
-# 2. SIDEBAR - CONTROLS
-# -----------------------------------------------------------
 st.sidebar.title("🏦 Loan Parameters")
 
-# A. Applicant Profile
 st.sidebar.header("👤 Applicant Profile")
 with st.sidebar.form("applicant_form"):
     fico = st.slider("FICO Score", 300, 850, 720)
@@ -38,19 +32,14 @@ with st.sidebar.form("applicant_form"):
     st.markdown("---")
     submitted = st.form_submit_button("💰 Generate Offer")
 
-# B. Macro-Economic Stress Testing (The "Recession Simulator")
 st.sidebar.markdown("---")
 st.sidebar.header("📉 Economic Stress Test")
 with st.sidebar.expander("Adjust Market Conditions"):
     cof_input = st.slider("Bank Cost of Funds (%)", 0.0, 0.15, 0.04, step=0.01)
     risk_multiplier = st.slider("Risk Multiplier (Recession)", 1.0, 2.0, 1.0, step=0.1, help="1.0 = Normal, 1.5 = Recession (Risk increases 50%)")
 
-# -----------------------------------------------------------
-# 3. ENGINE LOGIC
-# -----------------------------------------------------------
 @st.cache_resource
 def load_engine():
-    # Load model once and cache it
     return LoanPricingEngine(
         risk_model_path='models/risk_model_xgb.pkl',
         elasticity_model_path='models/elasticity_model_logit.pkl'
@@ -58,17 +47,12 @@ def load_engine():
 
 engine = load_engine()
 
-# Update Engine with Sidebar Macro Inputs
 engine.cost_of_funds = cof_input
 
-# -----------------------------------------------------------
-# 4. MAIN DASHBOARD
-# -----------------------------------------------------------
 st.title("Adaptive Loan Pricing Dashboard")
 st.markdown("Optimization Engine V1.0 | Active Policy Layer: **Enabled**")
 
 if submitted:
-    # 1. Prepare Data
     applicant_data = {
         'risk_score_norm': (fico - 300) / 550,
         'annual_inc': income,
@@ -81,10 +65,8 @@ if submitted:
         'purpose_debt_consolidation': 1, 'total_acc': 20
     }
 
-    # 2. Run Engine (With Stress Multiplier)
     decision = engine.get_optimal_rate(applicant_data, pd_multiplier=risk_multiplier)
 
-    # 3. Display Top-Level Metrics
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -101,46 +83,37 @@ if submitted:
 
     st.markdown("---")
 
-    # 4. Deep Dive: Decision Logic
     c1, c2 = st.columns([2, 1])
 
     with c1:
         st.subheader("📊 Optimization Curve")
         if decision['curve_data'] is not None:
             curve = decision['curve_data']
-                
-                # Setup Plot
+
             fig, ax1 = plt.subplots(figsize=(10, 5))
                 
-                # 1. Profit Line (Primary Y-Axis)
-                # Note: We set legend=False here to handle it manually later
             sns.lineplot(data=curve, x='Rate', y='Exp_Profit', ax=ax1, color='green', linewidth=3, legend=False)
             ax1.set_ylabel("Expected Profit ($)", color='green', fontweight='bold')
             ax1.set_xlabel("Interest Rate Offer")
-            ax1.axhline(0, color='black', alpha=0.2) # Zero profit line
+            ax1.axhline(0, color='black', alpha=0.2)
                 
-                # 2. Acceptance Line (Secondary Y-Axis)
             ax2 = ax1.twinx()
             sns.lineplot(data=curve, x='Rate', y='Prob_Accept', ax=ax2, color='gray', linestyle='--', alpha=0.6, legend=False)
             ax2.set_ylabel("Probability of Acceptance", color='gray')
             ax2.set_ylim(0, 1.05)
                 
-                # 3. Mark the Optimal Point
             if decision['decision'] == 'APPROVE':
                 ax1.plot(decision['optimal_rate'], decision['max_profit'], 'ro', markersize=10, zorder=5)
                 ax1.annotate(f" Optimal: {decision['optimal_rate']:.1%}", 
                             (decision['optimal_rate'], decision['max_profit']),
                             xytext=(0, 15), textcoords='offset points', ha='center', fontweight='bold', color='red')
                 
-                # 4. CUSTOM COMBINED LEGEND (The Fix)
-                # We create "proxy artists" to represent the lines in the legend cleanly
             from matplotlib.lines import Line2D
             legend_elements = [
                     Line2D([0], [0], color='green', lw=3, label='Expected Profit ($)'),
                     Line2D([0], [0], color='gray', lw=2, linestyle='--', label='Prob. Acceptance')
                 ]
                 
-                # Place legend ABOVE the plot (bbox_to_anchor) so it never overlaps data
             ax1.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.5, 1.02), ncol=2, frameon=False)
                 
             st.pyplot(fig)
@@ -152,7 +125,6 @@ if submitted:
     with c2:
         st.subheader("🛡️ Policy Guardrails")
         
-        # Policy Checklist Visual
         policy_checks = {
             "Risk Assessment": "Pass" if decision['decision'] != 'REJECT_RISK' else "Fail",
             "Profitability Check": "Pass" if decision['decision'] != 'REJECT_ECONOMICS' else "Fail",
@@ -180,7 +152,6 @@ if submitted:
 else:
     st.info("👈 Enter applicant details in the sidebar to generate a loan offer.")
     
-    # Simple Tutorial for the User
     st.markdown("""
     ### Quick Start Guide
     1. **Adjust FICO:** Drag FICO to **750** to see a "Prime" offer.
