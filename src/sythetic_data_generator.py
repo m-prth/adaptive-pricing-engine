@@ -50,7 +50,7 @@ output_path = "data/Prosper_Synthetic_Elasticity.csv"
 
 synthetic_df.to_csv(output_path, index=False)
 
-print(f"✅ Synthetic dataset created! Shape: {synthetic_df.shape}")
+print(f"Synthetic dataset created! Shape: {synthetic_df.shape}")
 print(f"   Saved to: {output_path}")
 
 print("\n--- Calibration Check ---")

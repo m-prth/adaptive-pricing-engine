@@ -65,7 +65,7 @@ def main():
         'purpose_debt_consolidation': 1
     }
     
-    print("\n--- 📥 Processing Application ---")
+    print("\n--- Processing Application ---")
     print(f"Applicant: FICO {args.fico} | Income ${args.income:,.0f} | Loan ${args.amount:,.0f}")
     
  

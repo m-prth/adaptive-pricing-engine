@@ -49,8 +49,8 @@ def check_drift(train_df, prod_df, features):
         if feat in train_df.columns and feat in prod_df.columns:
             psi = calculate_psi(train_df[feat], prod_df[feat])
             status = "🟢 Safe"
-            if psi > 0.1: status = "🟡 Warning"
-            if psi > 0.25: status = "🔴 CRITICAL"
+            if psi > 0.1: status = "Warning"
+            if psi > 0.25: status = "CRITICAL"
             
             alerts.append({
                 'Feature': feat,
