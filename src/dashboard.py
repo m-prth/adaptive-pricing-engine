@@ -17,9 +17,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.title("🏦 Loan Parameters")
+st.sidebar.title("Loan Parameters")
 
-st.sidebar.header("👤 Applicant Profile")
+st.sidebar.header("Applicant Profile")
 with st.sidebar.form("applicant_form"):
     fico = st.slider("FICO Score", 300, 850, 720)
     income = st.number_input("Annual Income ($)", min_value=10000, value=75000, step=5000)
@@ -33,7 +33,7 @@ with st.sidebar.form("applicant_form"):
     submitted = st.form_submit_button("💰 Generate Offer")
 
 st.sidebar.markdown("---")
-st.sidebar.header("📉 Economic Stress Test")
+st.sidebar.header("Economic Stress Test")
 with st.sidebar.expander("Adjust Market Conditions"):
     cof_input = st.slider("Bank Cost of Funds (%)", 0.0, 0.15, 0.04, step=0.01)
     risk_multiplier = st.slider("Risk Multiplier (Recession)", 1.0, 2.0, 1.0, step=0.1, help="1.0 = Normal, 1.5 = Recession (Risk increases 50%)")
@@ -86,7 +86,7 @@ if submitted:
     c1, c2 = st.columns([2, 1])
 
     with c1:
-        st.subheader("📊 Optimization Curve")
+        st.subheader("Optimization Curve")
         if decision['curve_data'] is not None:
             curve = decision['curve_data']
 
@@ -123,7 +123,7 @@ if submitted:
             st.warning("No optimization curve generated (Loan Rejected early).")
 
     with c2:
-        st.subheader("🛡️ Policy Guardrails")
+        st.subheader("Policy Guardrails")
         
         policy_checks = {
             "Risk Assessment": "Pass" if decision['decision'] != 'REJECT_RISK' else "Fail",
