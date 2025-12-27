@@ -57,6 +57,6 @@ Predicts if a loan will be accepted at the offered Rate.
 
 ### 1. Installation
 ```bash
-git clone [https://github.com/m-prth/adaptive-pricing-engine.git](https://github.com/m-prth/adaptive-pricing-engine.git)
+git clone https://github.com/m-prth/adaptive-pricing-engine.git
 cd adaptive-pricing-engine
 pip install -r requirements.txt
