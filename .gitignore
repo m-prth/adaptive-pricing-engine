@@ -45,3 +45,5 @@ models/*.joblib
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+!docs\Untitled_diagram-2025-12-27-225620.png
