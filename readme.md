@@ -35,7 +35,7 @@ Banks typically set interest rates using static "Rate Cards" (lookup tables). Th
 
 ## Architecture
 
-![Diagram](docs/Untitled_diagram-2025-12-27-225620.png)
+![Diagram](docs/Untitled_diagram-2025-12-28-002825.svg)
 
 ### 1. The Risk Model (XGBoost)
 Predicts `P(Default)`.
