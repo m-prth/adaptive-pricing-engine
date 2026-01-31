@@ -92,7 +92,7 @@ python src/pricing_service.py \
 
 ```json
 ["Capped at Prime Max (20%)"]
-["Capped to Global Max (36%)"]
+["Capped to Global Max (35%)"]
 ["PD exceeds maximum threshold"]
 ["Expected profit below minimum margin"]
 ["Pre-optimization PD Check"]

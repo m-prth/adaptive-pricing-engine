@@ -45,7 +45,7 @@ class LoanPricingEngine:
         # Rule 2: Global Rate Cap
         if final_rate > self.policy_config['GLOBAL_MAX_RATE']:
             final_rate = self.policy_config['GLOBAL_MAX_RATE']
-            notes.append('Capped to Global Max (36%)')
+            notes.append('Capped to Global Max (35%)')
 
         # Rule 3: Segment-Specific Caps
         if segment == 'Prime' and final_rate > self.policy_config['PRIME_MAX_RATE']:

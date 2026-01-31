@@ -128,7 +128,7 @@ if submitted:
         policy_checks = {
             "Risk Assessment": "Pass" if decision['decision'] != 'REJECT_RISK' else "Fail",
             "Profitability Check": "Pass" if decision['decision'] != 'REJECT_ECONOMICS' else "Fail",
-            "Usury Cap (36%)": "Pass",
+            "Usury Cap (35%)": "Pass",
             "Prime Rate Cap (18%)": "Applied" if "Prime Max" in str(decision['policy_notes']) else "N/A"
         }
         
