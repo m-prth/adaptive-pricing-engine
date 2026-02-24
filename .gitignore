@@ -16,8 +16,14 @@ ENV/
 Thumbs.db
 archive/*
 
+# --- AI Assistant Files ---
+CLAUDE.md
+WARP.md
+context.py
+project_full_context.txt
+nul
+
 # --- Project Data (Keep structure, ignore content) ---
-*.png
 *.txt
 !requirements.txt
 *.csv
